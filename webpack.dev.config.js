@@ -1,10 +1,12 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ESLintPlugin = require("eslint-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const {HotModuleReplacementPlugin} = require("webpack");
 
 module.exports = {
   mode: "development",
-  entry: ["./src/index.js"],
+  entry: ["./src/index.tsx"],
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[id].bundle.js",
@@ -14,7 +16,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.?js$/,
+        test: /\.(ts|js)x?$/i,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
@@ -28,6 +30,14 @@ module.exports = {
                 },
               ],
               "@babel/preset-typescript",
+            ],
+            plugins: [
+              [
+                "@babel/plugin-transform-runtime",
+                {
+                  regenerator: true,
+                },
+              ],
             ],
           },
         },
@@ -47,9 +57,9 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".js"],
+    extensions: [".ts", ".tsx", ".js"],
   },
-  devtool: "source-map",
+  devtool: "inline-source-map",
   devServer: {
     static: "./dist",
     compress: true,
@@ -58,5 +68,13 @@ module.exports = {
       overlay: true,
     },
   },
-  plugins: [new HotModuleReplacementPlugin()],
+  plugins: [
+    new HotModuleReplacementPlugin(),
+    new ESLintPlugin({
+      extensions: ["js", "jsx", "ts", "tsx"],
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      async: false,
+    }),
+  ],
 };
