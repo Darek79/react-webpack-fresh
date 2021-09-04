@@ -74,7 +74,13 @@ module.exports = {
       extensions: ["js", "jsx", "ts", "tsx"],
     }),
     new ForkTsCheckerWebpackPlugin({
-      async: false,
+      typescript: {
+        diagnosticOptions: {
+          semantic: true,
+          syntactic: true,
+        },
+        mode: "write-references",
+      },
     }),
   ],
 };

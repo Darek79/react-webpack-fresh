@@ -1,0 +1,13 @@
+{
+  "roots": ["<rootDir>/src"],
+
+  "setupFilesAfterEnv": ["./jest.setup.js"],
+  "transform": {
+    "^.+\\.jsx?$": "babel-jest",
+    "^.+\\.tsx?$": "ts-jest"
+  },
+  "testPathIgnorePatterns": ["node_modules", "\\.cache"],
+  "transformIgnorePatterns": ["<rootDir>/node_modules"],
+  "testURL": "http://localhost",
+  "testEnvironment": "jsdom"
+}
