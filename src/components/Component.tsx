@@ -1,4 +1,12 @@
-export default function Test(): JSX.Element {
+import "./component.scss";
+
+interface Test {
+  msg?: string;
+}
+
+export default function Test({
+  msg = "Darek",
+}: Test): JSX.Element {
   return (
     <div>
       <h1>HALLO You 1</h1>
@@ -7,7 +15,7 @@ export default function Test(): JSX.Element {
           target='_blank'
           rel='noreferrer'
           href='https://www.google.de/'>
-          Google
+          {msg}
         </a>
       </button>
     </div>
